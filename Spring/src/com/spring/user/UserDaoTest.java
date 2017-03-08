@@ -29,15 +29,14 @@ public class UserDaoTest {
 	@Before
 	public void setUp(){
 
-//		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
 		this.dao = context.getBean("userDao",UserDao.class);
-		
 		this.user1 = new User( "gyumee" , "박성절 ","springnol"); 
 		this.user2 = new User("leegw700", "이길원 ","springno2");
 		this.user3 = new User("bumjin" , "박범진","springno3") ; 
+		System.out.println(this.context);
+		System.out.println(this);
 	}
 	
-
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
