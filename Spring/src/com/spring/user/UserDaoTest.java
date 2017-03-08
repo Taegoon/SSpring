@@ -22,10 +22,7 @@ public class UserDaoTest {
 		dao.deleteAll();	// DB에 있는 정보 모두 삭제
 		assertThat(dao.getCount(),is(0));	// DB에 있는 정보 삭제 확인
 		
-		User user =new User();
-		user.setId("whiteshep");
-		user.setName("조민함");
-		user.setPassword("hantaegoon");
+		User user = new User("gyumee", "한태군", "springnol"); 
 		
 		dao.add(user);
 		assertThat(dao.getCount(),is(1));	//DB에 정보 입력 확인
@@ -35,6 +32,25 @@ public class UserDaoTest {
 		assertThat(user2.getName(),is(user.getName()));
 		assertThat(user2.getPassword(),is(user.getPassword()));
 		
+	}
+	
+	@Test
+	public void count() throws SQLException, ClassNotFoundException{
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
+		UserDao dao = context .getBean( "userDao" , UserDao .class); 
+		User user1 = new User( "gyumee" , "박성절 ","springnol"); 
+		User user2 = new User("leegw700", "이길원 ","springno2");
+		User user3 = new User("bumjin" , "박범진","springno3") ; 
+		
+		
+		dao.deleteAll(); 
+		assertThat(dao.getCount(),is(0)); 
+		dao.add(user1); 
+		assertThat(dao.getCount(),is(1)); 
+		dao.add(user2); 
+		assertThat(dao.getCount(),is(2)); 
+		dao.add(user3); 
+		assertThat(dao.getCount(),is(3)); 
 	}
 
 }
