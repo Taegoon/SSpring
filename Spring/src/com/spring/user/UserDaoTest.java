@@ -13,24 +13,26 @@ import org.springframework.ejb.access.EjbAccessException;
 
 public class UserDaoTest {
 	private UserDao dao;
+	private User user1;
+	private User user2;
+	private User user3;
 	
 	@Before
 	public void setUp(){
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
 		this.dao = context.getBean("userDao",UserDao.class);
+		
+		this.user1 = new User( "gyumee" , "박성절 ","springnol"); 
+		this.user2 = new User("leegw700", "이길원 ","springno2");
+		this.user3 = new User("bumjin" , "박범진","springno3") ; 
 	}
 	
 
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-		
-		
-		User user1 = new User( "gyumee" , "박성절 ","springnol"); 
-		User user2 = new User("leegw700", "이길원 ","springno2");
-
-		
+						
 		dao.deleteAll();	// DB에 있는 정보 모두 삭제
 		assertThat(dao.getCount(),is(0));	// DB에 있는 정보 삭제 확인
 		
@@ -51,11 +53,6 @@ public class UserDaoTest {
 	
 	@Test
 	public void count() throws SQLException, ClassNotFoundException{
-		
-		User user1 = new User( "gyumee" , "박성절 ","springnol"); 
-		User user2 = new User("leegw700", "이길원 ","springno2");
-		User user3 = new User("bumjin" , "박범진","springno3") ; 
-		
 		
 		dao.deleteAll(); 
 		assertThat(dao.getCount(),is(0)); 
