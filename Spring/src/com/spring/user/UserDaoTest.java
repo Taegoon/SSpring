@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.ejb.access.EjbAccessException;
 
 public class UserDaoTest {
 	
@@ -58,5 +59,14 @@ public class UserDaoTest {
 		dao.add(user3); 
 		assertThat(dao.getCount(),is(3)); 
 	}
-
+	
+	@Test(expected=EjbAccessException.class) 
+	public void getUserFailure() throws SQLException, ClassNotFoundException{
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
+		UserDao dao = context.getBean("userDao" , UserDao.class); 
+		dao.deleteAll();
+		assertThat(dao.getCount(),is(0)); 
+		dao.get("unknown_id");
+	}
+	
 }
