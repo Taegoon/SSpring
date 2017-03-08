@@ -20,8 +20,8 @@ public class UserDaoTest {
 		UserDao dao = context.getBean("userDao",UserDao.class);
 		
 		User user =new User();
-		user.setId("whiteshop");
-		user.setName("한태군");
+		user.setId("whiteshep");
+		user.setName("조민함");
 		user.setPassword("hantaegoon");
 		dao.add(user);
 		
@@ -33,9 +33,9 @@ public class UserDaoTest {
 		assertThat(user2.getPassword(),is(user.getPassword()));
 		
 	}
-	public static void main(String[] args){
-		JUnitCore.main("com.spring.user.UserDaoTest");
-	}
-	
+//	public static void main(String[] args){
+//		JUnitCore.main("com.spring.user.UserDaoTest");
+//	}
+//	
 
 }
