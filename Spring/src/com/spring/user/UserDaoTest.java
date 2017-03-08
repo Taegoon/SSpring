@@ -3,6 +3,8 @@ package com.spring.user;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.sql.SQLException;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.springframework.context.ApplicationContext;
@@ -10,15 +12,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ejb.access.EjbAccessException;
 
 public class UserDaoTest {
+	private UserDao dao;
+	
+	@Before
+	public void setUp(){
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
+		this.dao = context.getBean("userDao",UserDao.class);
+	}
 	
 
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
 		
-		UserDao dao = context.getBean("userDao",UserDao.class);
 		User user1 = new User( "gyumee" , "박성절 ","springnol"); 
 		User user2 = new User("leegw700", "이길원 ","springno2");
 
@@ -43,8 +51,7 @@ public class UserDaoTest {
 	
 	@Test
 	public void count() throws SQLException, ClassNotFoundException{
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
-		UserDao dao = context .getBean( "userDao" , UserDao .class); 
+		
 		User user1 = new User( "gyumee" , "박성절 ","springnol"); 
 		User user2 = new User("leegw700", "이길원 ","springno2");
 		User user3 = new User("bumjin" , "박범진","springno3") ; 
@@ -62,8 +69,7 @@ public class UserDaoTest {
 	
 	@Test(expected=EjbAccessException.class) 
 	public void getUserFailure() throws SQLException, ClassNotFoundException{
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml",UserDao.class);
-		UserDao dao = context.getBean("userDao" , UserDao.class); 
+		
 		dao.deleteAll();
 		assertThat(dao.getCount(),is(0)); 
 		dao.get("unknown_id");
