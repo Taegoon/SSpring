@@ -5,23 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 public class UserDao {
 	
 	private ConnectionMaker connectionMaker;
-//	private SimpleConnectionMaker simpleConnectionMaker;
-//	public UserDao(){
-//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-//		this.connectionMaker=context.getBean("connectionMaker", ConnectionMaker.class);
-//	}
-	
-//	public UserDao(ConnectionMaker connectionMaker){
-//		simpleConnectionMaker = new  SimpleConnectionMaker();
-//		connectionMaker = new  DConnectionMaker();
-//		this.connectionMaker = connectionMaker; 
-//	}
-
 	
 	public ConnectionMaker getConnectionMaker() {
 		return connectionMaker;
@@ -34,7 +20,6 @@ public class UserDao {
 
 
 	public void add(User user) throws ClassNotFoundException, SQLException{
-//		Connection c = simpleConnectionMaker.makeNewConnection();
 		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
 		
 		PreparedStatement ps = c.prepareStatement("insert into users(id,name,password) values(?,?,?)");
@@ -51,7 +36,6 @@ public class UserDao {
 	
 	public User get(String id) throws ClassNotFoundException, SQLException{
 		
-//		Connection c = simpleConnectionMaker.makeNewConnection();
 		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
 		
 		PreparedStatement ps = c.prepareStatement( "select * from users where id = ?" ); 
@@ -73,6 +57,32 @@ public class UserDao {
 				
 	}
 	
-//	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+	public void deleteAll() throws SQLException, ClassNotFoundException{
+		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
+		PreparedStatement ps = c.prepareStatement( "delete from users" ); 
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		c.close();
+
+	}
+	
+	public int getCount() throws SQLException, ClassNotFoundException{
+		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
+		PreparedStatement ps = c.prepareStatement( "select count(*) from users" ); 
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		rs.close(); 
+		ps.close(); 
+		c.close(); 
+		
+		return count;
+		
+	}
+	
 	
 }

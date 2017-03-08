@@ -19,13 +19,16 @@ public class UserDaoTest {
 		
 		UserDao dao = context.getBean("userDao",UserDao.class);
 		
+		dao.deleteAll();	// DB에 있는 정보 모두 삭제
+		assertThat(dao.getCount(),is(0));	// DB에 있는 정보 삭제 확인
+		
 		User user =new User();
 		user.setId("whiteshep");
 		user.setName("조민함");
 		user.setPassword("hantaegoon");
-		dao.add(user);
 		
-		System.out.println(user.getId() + "등록 성공");
+		dao.add(user);
+		assertThat(dao.getCount(),is(1));	//DB에 정보 입력 확인
 		
 		User user2 = dao.get(user.getId());
 		
@@ -33,9 +36,5 @@ public class UserDaoTest {
 		assertThat(user2.getPassword(),is(user.getPassword()));
 		
 	}
-//	public static void main(String[] args){
-//		JUnitCore.main("com.spring.user.UserDaoTest");
-//	}
-//	
 
 }
