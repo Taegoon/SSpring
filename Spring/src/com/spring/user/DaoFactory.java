@@ -23,14 +23,15 @@ public class DaoFactory {
 		return new DConnectionMaker();
 	}
 	
-	@Bean 
-	public DataSource dataSource() { 
-		SimpleDriverDataSource dataSource = new SimpleDriverDataSource(); 
-
-		dataSource.setDriverClass(Driver.class); 
-		dataSource.setUrl("jdbc:mysql://localhost/testdb?autoReconnect=true&useSSL=false"); 
-		dataSource.setUsername("root"); 
-		dataSource.setPassword("hantaijun1225"); 
-	return dataSource; 
-	}
+//	@Bean 
+//	public DataSource dataSource() { 
+//		SimpleDriverDataSource dataSource = new SimpleDriverDataSource(); 
+//
+//		dataSource.setDriverClass(Driver.class); 
+//		dataSource.setUrl("jdbc:mysql://localhost/testdb?autoReconnect=true&useSSL=false"); 
+//		dataSource.setUsername("root"); 
+//		dataSource.setPassword("hantaijun1225"); 
+//	return dataSource; 
+//	}
+	
 }
