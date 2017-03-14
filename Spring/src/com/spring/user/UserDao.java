@@ -90,21 +90,51 @@ public class UserDao {
 		}
 	}
 	
-	public int getCount() throws SQLException, ClassNotFoundException{
-		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
-		PreparedStatement ps = c.prepareStatement( "select count(*) from users" ); 
+	public int getCount() throws SQLException{
+		Connection c = null;;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int count = rs.getInt(1);
+		try {
+			c = ((DConnectionMaker) connectionMaker).makeConnection();
+			ps = c.prepareStatement( "select count(*) from users" ); 
+			
+			rs = ps.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		rs.close(); 
-		ps.close(); 
-		c.close(); 
-		
-		return count;
-		
+		finally{
+			if(rs!=null){
+				try{
+					rs.close();
+				}catch(SQLException e){
+					
+				}
+			}
+			if(ps!=null){
+				try{
+					ps.close();;
+				}catch(SQLException e){
+					
+				}
+			}
+			if(c!=null){
+				try{
+					c.close();;
+				}catch(SQLException e){
+					
+				}
+			}
+		}
+		return 0;
 	}
-	
-	
 }
+
+
+
+
+
