@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.springframework.ejb.access.EjbAccessException;
 
-public class UserDao {
+public abstract class UserDao {
 	
 	private ConnectionMaker connectionMaker;
 	
@@ -67,29 +67,23 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			c = ((DConnectionMaker) connectionMaker).makeConnection();
-			ps = c.prepareStatement( "delete from users" ); 
+			
+			ps = makeStatement(c); 
+			
 			ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			if(ps!=null){
-				try{
-					ps.close();
-				}catch(SQLException e){
-					
-				}
-			}
-			if(c!=null){
-				try{
-					c.close();;
-				}catch(SQLException e){
-					
-				}
-			}
+			if(ps!=null){try{ps.close();}catch(SQLException e){}}
+			if(c!=null){try{c.close();}catch(SQLException e){}}
 		}
+		
 	}
-	
+//	deleteAll에서 변하는 부분을 별도로 메소드 추출
+	abstract protected PreparedStatement makeStatement(Connection c)throws SQLException ;
+
+
 	public int getCount() throws SQLException{
 		Connection c = null;;
 		PreparedStatement ps = null;
@@ -108,27 +102,9 @@ public class UserDao {
 		}
 		
 		finally{
-			if(rs!=null){
-				try{
-					rs.close();
-				}catch(SQLException e){
-					
-				}
-			}
-			if(ps!=null){
-				try{
-					ps.close();;
-				}catch(SQLException e){
-					
-				}
-			}
-			if(c!=null){
-				try{
-					c.close();;
-				}catch(SQLException e){
-					
-				}
-			}
+			if(rs!=null){try{rs.close();}catch(SQLException e){}}
+			if(ps!=null){try{ps.close();}catch(SQLException e){}}
+			if(c!=null){try{c.close();}catch(SQLException e){}}
 		}
 		return 0;
 	}
