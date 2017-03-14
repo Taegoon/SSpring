@@ -62,15 +62,32 @@ public class UserDao {
 				
 	}
 	
-	public void deleteAll() throws SQLException, ClassNotFoundException{
-		Connection c = ((DConnectionMaker) connectionMaker).makeConnection();
-		PreparedStatement ps = c.prepareStatement( "delete from users" ); 
-		
-		ps.executeUpdate();
-		
-		ps.close();
-		c.close();
-
+	public void deleteAll() throws SQLException{
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ((DConnectionMaker) connectionMaker).makeConnection();
+			ps = c.prepareStatement( "delete from users" ); 
+			ps.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(ps!=null){
+				try{
+					ps.close();
+				}catch(SQLException e){
+					
+				}
+			}
+			if(c!=null){
+				try{
+					c.close();;
+				}catch(SQLException e){
+					
+				}
+			}
+		}
 	}
 	
 	public int getCount() throws SQLException, ClassNotFoundException{
