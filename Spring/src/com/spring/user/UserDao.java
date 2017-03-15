@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import org.springframework.ejb.access.EjbAccessException;
 
-public abstract class UserDao {
+public class UserDao {
 	
 	private ConnectionMaker connectionMaker;
 	
@@ -68,7 +68,9 @@ public abstract class UserDao {
 		try {
 			c = ((DConnectionMaker) connectionMaker).makeConnection();
 			
-			ps = makeStatement(c); 
+			StatementStrategy strategy = new DeleteAllStatement();
+			ps = strategy.makePreparedStatement(c); 
+			
 			
 			ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -80,9 +82,6 @@ public abstract class UserDao {
 		}
 		
 	}
-//	deleteAll에서 변하는 부분을 별도로 메소드 추출
-	abstract protected PreparedStatement makeStatement(Connection c)throws SQLException ;
-
 
 	public int getCount() throws SQLException{
 		Connection c = null;;
@@ -108,6 +107,7 @@ public abstract class UserDao {
 		}
 		return 0;
 	}
+	
 }
 
 
