@@ -63,23 +63,8 @@ public class UserDao {
 	}
 	
 	public void deleteAll() throws SQLException{
-		Connection c = null;
-		PreparedStatement ps = null;
-		try {
-			c = ((DConnectionMaker) connectionMaker).makeConnection();
-			
-			StatementStrategy strategy = new DeleteAllStatement();
-			ps = strategy.makePreparedStatement(c); 
-			
-			
-			ps.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			if(ps!=null){try{ps.close();}catch(SQLException e){}}
-			if(c!=null){try{c.close();}catch(SQLException e){}}
-		}
+		StatementStrategy st = new DeleteAllStatement() ;
+		jdbcContextWithStatementStrategy(st); 
 		
 	}
 
@@ -108,6 +93,25 @@ public class UserDao {
 		return 0;
 	}
 	
+	public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException{
+		Connection c = null;
+		PreparedStatement ps = null;
+		try {
+			c = ((DConnectionMaker) connectionMaker).makeConnection();
+			
+			ps = stmt.makePreparedStatement(c); 
+			
+			
+			ps.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			if(ps!=null){try{ps.close();}catch(SQLException e){}}
+			if(c!=null){try{c.close();}catch(SQLException e){}}
+		}
+		
+	}
 }
 
 
