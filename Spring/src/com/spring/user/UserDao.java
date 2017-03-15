@@ -23,7 +23,7 @@ public class UserDao {
 
 	public void add(final User user) throws ClassNotFoundException, SQLException{
 //		중첩 클래스 선언하여 사용
-		class AddStatement implements StatementStrategy{
+		jdbcContextWithStatementStrategy(new StatementStrategy(){
 	
 			@Override
 			public PreparedStatement makePreparedStatement(Connection c) throws SQLException{
@@ -36,9 +36,7 @@ public class UserDao {
 			}
 
 		}
-
-		StatementStrategy st = new AddStatement() ;
-		jdbcContextWithStatementStrategy(st); 
+		); 
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException{
