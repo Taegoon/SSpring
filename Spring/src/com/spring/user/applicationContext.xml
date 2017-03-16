@@ -4,9 +4,22 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
 	
-	<bean id="connectionMaker" class="com.spring.user.DConnectionMaker"/>
-	
 	<bean id="userDao" class="com.spring.user.UserDao"> 
 		<property name="connectionMaker" ref="connectionMaker"/> 
+		<!-- <property name="jdbcContext" ref="jdbcContext"/> -->
 	</bean> 
+	
+	<!-- <bean id="jdbcContext" class="com.spring.user.JdbcContext">
+		<property name="connectionMaker" ref="connectionMaker"/> 
+	</bean>
+	 -->
+	<!-- 
+	<property name="dataSource" ref="dataSource" /> == <property name="connectionMaker" ref="connectionMaker"/> 
+	 -->
+	 
+	 
+	 
+	 
+	<bean id="connectionMaker" class="com.spring.user.DConnectionMaker"/>
+	
 </beans>

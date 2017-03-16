@@ -12,10 +12,11 @@ public class UserDao {
 	private ConnectionMaker connectionMaker;
 	private JdbcContext jdbcContext;
 	
-	
+	/*
 	public void setJdbcContext(JdbcContext jdbcContext) {
 		this.jdbcContext = jdbcContext;
 	}
+	*/
 
 
 	public ConnectionMaker getConnectionMaker() {
@@ -25,6 +26,11 @@ public class UserDao {
 
 	public void setConnectionMaker(ConnectionMaker connectionMaker) {
 		this.connectionMaker = connectionMaker;
+		
+		//추가
+		this.jdbcContext = new JdbcContext();
+		this.jdbcContext.setDataSource(connectionMaker);
+		
 	}
 
 
