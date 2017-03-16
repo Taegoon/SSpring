@@ -10,7 +10,14 @@ import org.springframework.ejb.access.EjbAccessException;
 public class UserDao {
 	
 	private ConnectionMaker connectionMaker;
+	private JdbcContext jdbcContext;
 	
+	
+	public void setJdbcContext(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
+	}
+
+
 	public ConnectionMaker getConnectionMaker() {
 		return connectionMaker;
 	}
@@ -23,7 +30,7 @@ public class UserDao {
 
 	public void add(final User user) throws ClassNotFoundException, SQLException{
 //		중첩 클래스 선언하여 사용
-		jdbcContextWithStatementStrategy(new StatementStrategy(){
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy(){
 	
 			@Override
 			public PreparedStatement makePreparedStatement(Connection c) throws SQLException{
@@ -66,8 +73,8 @@ public class UserDao {
 	}
 	
 	public void deleteAll() throws SQLException{
-		 
-		jdbcContextWithStatementStrategy(new DeleteAllStatement(){
+//		jdbcContextWithStatementStrategy
+		this.jdbcContext.workWithStatementStrategy(new DeleteAllStatement(){
 			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
 				return c.prepareStatement( "delete from users" ); 
 			}
