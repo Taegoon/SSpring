@@ -11,6 +11,16 @@ public class JdbcContext {
 		this.connectionMaker = connectionMaker;
 	}
 	
+//	변하지 않는 부분을 분리시킨 deleteAll() 메소드
+
+	public void executeSql(final String query) throws SQLException{
+		workWithStatementStrategy(new DeleteAllStatement(){
+			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+				return c.prepareStatement(query); 
+			}
+		}); 
+	}
+	
 	public void workWithStatementStrategy(StatementStrategy stmt) throws SQLException{
 		Connection c = null;
 		PreparedStatement ps = null;

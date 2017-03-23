@@ -80,19 +80,11 @@ public class UserDao {
 	
 	public void deleteAll() throws SQLException{
 //		jdbcContextWithStatementStrategy
-		executeSql("delete from users");
+		this.jdbcContext.executeSql("delete from users");
 		
 	}
 	
-//	변하지 않는 부분을 분리시킨 deleteAll() 메소드
 
-	private void executeSql(final String query) throws SQLException{
-		this.jdbcContext.workWithStatementStrategy(new DeleteAllStatement(){
-			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-				return c.prepareStatement(query); 
-			}
-		}); 
-	}
 	
 	public int getCount() throws SQLException{
 		Connection c = null;;
