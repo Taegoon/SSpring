@@ -5,7 +5,19 @@ public class User {
 	String name;
 	String password;
 	
+	Level level;
+	int login;
+	int recommend;
 	
+	
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
 	public User() {
 		super();
 	}

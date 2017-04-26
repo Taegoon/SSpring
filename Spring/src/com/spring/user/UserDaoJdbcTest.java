@@ -18,10 +18,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="applicationContext.xml")
-public class UserDaoTest {
+public class UserDaoJdbcTest {
 	@Autowired
 	private ApplicationContext context;
-	private UserDao dao;
+	private UserDaoJdbc dao;
 	private User user1;
 	private User user2;
 	private User user3;
@@ -29,7 +29,7 @@ public class UserDaoTest {
 	@Before
 	public void setUp(){
 
-		this.dao = context.getBean("userDao",UserDao.class);
+		this.dao = context.getBean("userDao",UserDaoJdbc.class);
 		this.user1 = new User( "gyumee" , "박성절 ","springnol"); 
 		this.user2 = new User("leegw700", "이길원 ","springno2");
 		this.user3 = new User("bumjin" , "박범진","springno3") ; 
